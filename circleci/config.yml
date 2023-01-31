@@ -3,21 +3,22 @@ version: 2.1
 orbs:
   welcome: circleci/welcome-orb@0.4.1
 jobs:
-  print-hello:
+  print_hello:
     docker:
-      image: circleci/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
-      - run:
-        command: "echo hello"
-  print-world:
+      - run: echo hello
+  print_world:
     docker:
-      image: circleci/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
-      - run:
-        command: "echo world"
-    requires:
-      - print-hello
+      - run: echo world
+    
 workflows:
-  say-hello-workflow:
+  welcome:
     jobs:
+      - welcome/run
       - print-hello
+      - print_world:
+        requires:
+          - print_hello
