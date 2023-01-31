@@ -15,9 +15,10 @@ jobs:
       - run: echo world
     
 workflows:
-  jobs:
-    - welcome/run
-    - print_hello
-    - print_world:
-      requires:
-        - print_hello
+  welcome:
+    jobs:
+      - welcome/run
+      - print_hello
+      - print_world:
+        requires:
+          - print_hello
