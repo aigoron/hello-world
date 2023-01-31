@@ -17,7 +17,6 @@ jobs:
 workflows:
   welcome:
     jobs:
-      - welcome/run
       - print-hello
       - print_world:
           requires:
