@@ -3,22 +3,33 @@ version: 2.1
 orbs:
   welcome: circleci/welcome-orb@0.4.1
 jobs:
-  print_hello:
+  myjob1:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: echo hello
-  print_world:
+      - checkout
+      - run: echo "hello world"
+  create_infrastructure:
     docker:
-      - image: circleci/node:13.8.0
+      - image: amazon/aws-cli
     steps:
-      - run: echo world
+      - checkout:
+      - run:
+        name: Create Cloudformation Stack
+        command: |
+          aws cloudformation deploy \
+            --template-file template.yml \
+            --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+            --region us-east-1
+
     
 workflows:
-  welcome:
+  my_workflow:
     jobs:
-      - welcome/run
-      - print_hello
-      - print_world:
-          requires:
-            - print_hello
+      - myjob1
+      - create_infrastructure
+      #- welcome/run
+      #- print_hello
+      #- print_world:
+      #   requires:
+      #     - print_hello
