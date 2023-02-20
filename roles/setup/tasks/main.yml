@@ -9,12 +9,13 @@
   apt:
     upgrade: yes
 
+
 - name: remove dependencies that are no longer required
   become: yes
   apt:
     autoremove: yes
 
-- name: "install dependencies"
+- name: "install dependencies."
   become: yes
   apt:
     name: ["nodejs", "npm"]
